@@ -1,4 +1,4 @@
-# zeortui
+# zeort-ui
 
 ## Project setup
 ```
