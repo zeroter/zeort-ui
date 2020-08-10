@@ -6,6 +6,8 @@
 <script>
 export default {
     name: "ZeSlider",
-    data(){}
+    data(){
+        return{}
+    }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="msg">
     <ze-slider></ze-slider>
   </div>
 </template>
@@ -9,6 +9,9 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  mounted() {
+    this.$message.info('111')
   }
 }
 </script>

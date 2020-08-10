@@ -1,5 +1,5 @@
 import slider from './slider';
-
+import message from './message'
 const components = [ slider ];
 
 const install = function (Vue) {
@@ -7,6 +7,7 @@ const install = function (Vue) {
     components.map(component => {
         Vue.use(component);
     });
+    Vue.prototype.$message = message;
 };
 
 if (typeof window !== 'undefined' && window.Vue) {
