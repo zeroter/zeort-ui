@@ -1,4 +1,5 @@
 import { checkedValueType } from '../utils/common';
+import Message from './src/message'
 import Vue from 'vue';
 const defaults = {
     top: 50,
@@ -6,22 +7,29 @@ const defaults = {
 }
 
 function notice (type, options) {
+
     if (['undefined', 'null'].includes(checkedValueType(options))) {
         var content = "";
     } else if (checkedValueType(options) === 'string') {
         var content = options;
     } else if (checkedValueType(options) === 'object') {
-        var { content = "", duration = defaults.duration, onClose = function () {} } = options;
+        var { content = "", duration = defaults.duration, top = defaults.top, onClose = function () {} } = options;
     }
 
-    let Instance = new Vue({
-        el: $el,
+    let _props = {content, duration, top};
+
+    const Instance = new Vue({
         render (h) {
-            return h('div', {
-                "class": "ze-message"
-            }, content);
+            return h(Message, {
+                props: _props
+            });
         }
     });
+
+    const component = Instance.$mount();
+    document.body.appendChild(component.$el);
+
+
 }
 export default {
     name: 'Message',

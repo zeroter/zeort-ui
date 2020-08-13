@@ -1,5 +1,6 @@
 import slider from './slider';
-import message from './message'
+import message from './message';
+import '../styles/common.scss';
 const components = [ slider ];
 
 const install = function (Vue) {

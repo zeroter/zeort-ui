@@ -11,7 +11,10 @@ export default {
     msg: String
   },
   mounted() {
-    this.$message.info('111')
+    this.$message.info({
+      content: "测试数据",
+      duration: 1000
+    })
   }
 }
 </script>
