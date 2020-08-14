@@ -43,11 +43,9 @@ export default {
             },300)
         },
         leave (el) {
-            setTimeout(()=>{
                 el.style.transition = "all .5s ease";
-                el.style.opacity = 1;
+                el.style.opacity = 0;
                 el.style.transform = "translate(-50%, 0px)";
-            },300)
         },
         close () {
             setTimeout(()=>{
