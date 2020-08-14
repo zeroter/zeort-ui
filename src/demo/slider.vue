@@ -13,7 +13,7 @@ export default {
   mounted() {
     this.$message.info({
       content: "测试数据",
-      duration: 1000
+      duration: 3000
     })
   }
 }

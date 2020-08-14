@@ -8,11 +8,12 @@
     </transition>
 </template>
 <script>
+import { setElStyle } from '../../utils/common'
 export default {
     name: 'ze-message',
     data(){
         return{
-            isShowMsg: false
+            isShowMsg: true
         }
     },
     props: {
@@ -31,32 +32,30 @@ export default {
     },
     methods: {
         beforeEnter (el) {
-            el.style.transition = "all .5s ease";
-            el.style.opacity = 0;
-            el.style.transform = "translate(-50%, 0)"
+            setElStyle(el, {
+                "transition": "all .5s ease",
+                "opacity": 0,
+                "transform": "translate(-50%, 0)" 
+            })
         },
         enter (el) {
-            setTimeout(()=>{
-                el.style.transition = "all .5s ease";
-                el.style.opacity = 1;
-                el.style.transform = `translate(-50%, ${this.top}px)`;
-            },300)
+            setElStyle(el, {
+                "opacity": 1,
+                "transform": `translate(-50%, ${this.top}px)` 
+            }, 300, this.close)   
         },
         leave (el) {
-                el.style.transition = "all .5s ease";
-                el.style.opacity = 0;
-                el.style.transform = "translate(-50%, 0px)";
+            setElStyle(el, {
+                "opacity": 0,
+                "transform": `translate(-50%, 0)` 
+            })
         },
         close () {
             setTimeout(()=>{
                 this.isShowMsg = false
             },this.duration)
         }
-    },
-    mounted() {
-        this.isShowMsg = true;
-        this.close()
-    },
+    }
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
