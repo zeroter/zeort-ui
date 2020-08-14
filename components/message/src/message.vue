@@ -1,6 +1,6 @@
 <template>
-    <transition @before-enter="beforeEnter" @enter="enter" @leave="leave">
-        <div class="ze-message" v-if="isShowMsg">
+    <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" appear>
+        <div class="ze-message-container" v-if="isShowMsg">
             <div class="ze-def-flex ze-message-content ze-noselect">
                 {{content}}
             </div>
@@ -25,6 +25,9 @@ export default {
         },
         top: {
             type: Number
+        },
+        onClose: {
+            type: Function
         }
     },
     computed: {
@@ -49,17 +52,19 @@ export default {
                 "opacity": 0,
                 "transform": `translate(-50%, 0)` 
             })
+            setTimeout(this.onClose, 500)
         },
-        close () {
+        close (duration = this.duration) {
+            if (duration === Infinity) return
             setTimeout(()=>{
-                this.isShowMsg = false
-            },this.duration)
+                this.isShowMsg = false;
+            }, duration)
         }
-    }
+    },
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-    .ze-message{
+    .ze-message-container{
         position: fixed;
         left: 50%;
         top: 0;

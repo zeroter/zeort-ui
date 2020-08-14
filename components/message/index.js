@@ -13,10 +13,10 @@ function notice (type, options) {
     } else if (checkedValueType(options) === 'string') {
         var content = options;
     } else if (checkedValueType(options) === 'object') {
-        var { content = "", duration = defaults.duration, top = defaults.top, onClose = function () {} } = options;
+        var { content = "", duration = defaults.duration, top = defaults.top} = options;
     }
-
-    let _props = {content, duration, top};
+ 
+    let _props = {content, duration, top, onClose};
 
     const Instance = new Vue({
         render (h) {
@@ -29,11 +29,17 @@ function notice (type, options) {
     const component = Instance.$mount();
     document.body.appendChild(component.$el);
 
+    function onClose () {
+        document.body.removeChild(component.$el)
+    }
 
 }
 export default {
     name: 'Message',
-    info(options) {
+    info (options) {
         return notice('info', options); 
+    },
+    remove() {
+        //
     }
 };

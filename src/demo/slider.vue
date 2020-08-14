@@ -12,7 +12,7 @@ export default {
   },
   mounted() {
     this.$message.info({
-      content: "测试数据",
+      content: "这是一条提示！",
       duration: 3000
     })
   }
