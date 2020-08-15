@@ -9,7 +9,7 @@
 import { setElStyle } from "../../utils/common";
 let _this = {};
 export default {
-    name: "ze-message",
+    name: "ZeMessage",
     data() {
         return {
             isShowMsg: true

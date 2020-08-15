@@ -1,11 +1,14 @@
 import { checkedValueType } from '../utils/common';
 import Message from './src/message'
 import Vue from 'vue';
+
 const defaults = {
     top: 50,
     duration: 3000
 }
+
 let closeTimer = null;
+
 function notice (type, options) {
 
     var content = "", duration = defaults.duration, top = defaults.top;
