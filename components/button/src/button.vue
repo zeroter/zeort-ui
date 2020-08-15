@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="ze-button">
         按钮
     </div>
 </template>
