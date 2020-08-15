@@ -5,18 +5,18 @@ const defaults = {
     top: 50,
     duration: 3000
 }
-
+let closeTimer = null;
 function notice (type, options) {
 
-    if (['undefined', 'null'].includes(checkedValueType(options))) {
-        var content = "";
-    } else if (checkedValueType(options) === 'string') {
-        var content = options;
+    var content = "", duration = defaults.duration, top = defaults.top;
+
+    if (checkedValueType(options) === 'string') {
+        content = options;
     } else if (checkedValueType(options) === 'object') {
         var { content = "", duration = defaults.duration, top = defaults.top} = options;
     }
  
-    let _props = {content, duration, top, onClose};
+    let _props = {type, content, duration, top, onClose};
 
     const Instance = new Vue({
         render (h) {
@@ -26,20 +26,39 @@ function notice (type, options) {
         }
     });
 
+    reomveNodes();
     const component = Instance.$mount();
     document.body.appendChild(component.$el);
 
     function onClose () {
-        document.body.removeChild(component.$el)
+        closeTimer = setTimeout(()=>{
+            reomveNodes();
+        }, 500);
     }
 
 }
+
+function reomveNodes (){
+
+    if(closeTimer){
+        clearTimeout(closeTimer);
+        closeTimer = null;
+    };
+
+    const zeMsgCont = document.querySelector('.ze-message-container');
+
+    if(zeMsgCont){
+        document.body.removeChild(zeMsgCont)
+    };
+
+}
+
 export default {
     name: 'Message',
     info (options) {
         return notice('info', options); 
     },
     remove() {
-        //
+        Message.methods.close(0);
     }
 };

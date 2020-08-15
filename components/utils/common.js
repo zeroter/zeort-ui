@@ -1,3 +1,4 @@
+let closeTimer = null
 
 function checkedValueType (value) {
     let type = Object.prototype.toString.call(value);
@@ -14,11 +15,16 @@ function setElStyle (el, styles, duration, callback) {
             el.style[key] = styles[key]
         });
         
+        if(closeTimer){
+            clearTimeout(closeTimer);
+            closeTimer = null;
+        }
+
         callback && callback()
     }
 
     if(duration){
-        setTimeout(set, duration)
+        closeTimer = setTimeout(set, duration)
     } else {
         set()
     }

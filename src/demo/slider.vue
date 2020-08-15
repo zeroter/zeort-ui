@@ -1,6 +1,8 @@
 <template>
     <div id="msg">
         <ze-slider></ze-slider>
+        <button @click="btn">点击</button>
+        <button @click="clo">取消</button>
     </div>
 </template>
 
@@ -10,11 +12,19 @@ export default {
     props: {
         msg: String,
     },
-    mounted() {
-        this.$message.info({
-            content: "这是一条提示！",
-            duration: 3000,
-        });
+    data() {
+        return {
+            num: 0,
+        };
+    },
+    mounted() {},
+    methods: {
+        btn() {
+            this.$message.info('这是一条提示语句');
+        },
+        clo() {
+            this.$message.remove()
+        }
     },
 };
 </script>

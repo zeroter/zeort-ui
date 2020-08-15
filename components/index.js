@@ -11,6 +11,23 @@ const install = function (Vue) {
     Vue.prototype.$message = message;
 };
 
+if(window){
+    class Zeort {
+
+        constructor() {
+            this.colseTimer = null;
+        };
+
+        clearCloseTimer() {
+            if (this.closeTimer) {
+                clearTimeout(this.closeTimer);
+                this.closeTimer = null;
+            }
+        };
+    } 
+    window.Zeort = new Zeort;
+}
+
 if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
 }
