@@ -3,7 +3,7 @@
         <ze-slider></ze-slider>
         <button @click="btn">点击</button>
         <button @click="clo">取消</button>
-        <ze-button></ze-button>
+        <ze-button type="info" disabled>默认按钮</ze-button>
     </div>
 </template>
 
