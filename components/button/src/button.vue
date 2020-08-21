@@ -45,7 +45,7 @@ export default {
             const button = this.$refs[this.btn_ref];
 
             if(this.isAnimation && event && button) {
-                this.animation(event, button)
+                // this.animation(event, button)
             }
 
             this.$emit('click', event)
