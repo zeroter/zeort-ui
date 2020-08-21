@@ -1,3 +1,27 @@
+$prefix: ze;
+
+// 基础颜色值
+$default: #666;
+$info: rgba(25, 181, 254, 1);
+$primary: rgba(25, 181, 254, 1);
+$success: rgba(25, 181, 254, 1);
+$warning: rgba(25, 181, 254, 1);
+$error: rgba(25, 181, 254, 1);
+
+$default-hover: #19B5FE;
+$info-hover: rgba(25, 181, 254, .7);
+$primary-hover: rgba(25, 181, 254, .7);
+$success-hover: rgba(25, 181, 254, .7);
+$warning-hover: rgba(25, 181, 254, .7);
+$error-hover: rgba(25, 181, 254, .7);
+
+//透明度
+$disabled: 0.5;
+
+// 字体大小
+
+$text: 14px;
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

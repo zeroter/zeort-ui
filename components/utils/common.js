@@ -29,6 +29,20 @@ function setElStyle (el, styles, duration, callback) {
         set()
     }
 }
+
+function oneOf (value, validList) {
+    if(checkedValueType(validList) === 'array'){   
+        let isExist = validList.findIndex((item) => {
+            return item === value
+        })
+
+        if(isExist !== -1){
+            return true
+        }
+    }
+    return false;
+}
+
 export {
     checkedValueType,
     setElStyle

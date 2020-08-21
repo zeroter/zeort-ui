@@ -20,6 +20,7 @@ if(window){
 
         constructor() {
             this.colseTimer = null;
+            this.uiPrefix = 'ze';
         };
 
         clearCloseTimer() {

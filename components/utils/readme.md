@@ -15,3 +15,4 @@
 
 **params：（domObj, object, number, function）** 分别对应： 元素对象(必填)， 所要添加样式(必填)， 延迟修改样式时间(毫秒数)(非必填)， 回调函数(非必填)
 **return：（false）**
+

@@ -1,14 +1,16 @@
 <template>
-    <button :class="classes" :disabled="disabled">
+    <button :class="classes" :disabled="disabled" @click="handleClick" :ref="btn_ref">
         <slot></slot>
     </button>
 </template>
 <script>
+import { setElStyle } from "../../utils/common";
 export default {
-    name: "ZeButton",
+    name: `Button`,
     data () {
         return{
-            baseClass: 'ze-button'
+            baseClass: `${Zeort.uiPrefix}-button`,
+            btn_ref: `${Zeort.uiPrefix}-button-${new Date().getTime()}`
         }
     },
     props: {
@@ -20,6 +22,10 @@ export default {
         },
         disabled: {
             type: Boolean,
+        },
+        isAnimation: {
+            type: Boolean,
+            default: true
         }
     },
     computed: {
@@ -27,44 +33,110 @@ export default {
             return [
                 this.baseClass,
                 {
-                    [`ze-button-${this.type}`]: this.type,
-                    [`ze-button-${this.size}`]: this.size,
-                    [`ze-button-${this.disabled ? 'disabled' : ''}`]: this.disabled
+                    [`${Zeort.uiPrefix}-button-${this.type}`]: this.type,
+                    [`${Zeort.uiPrefix}-button-${this.size}`]: this.size,
+                    [`${Zeort.uiPrefix}-button-${this.disabled ? 'disabled' : ''}`]: this.disabled
                 }
             ]
+        }
+    },
+    methods: {
+        handleClick (event) {
+            const button = this.$refs[this.btn_ref];
+
+            if(this.isAnimation && event && button) {
+                this.animation(event, button)
+            }
+
+            this.$emit('click', event)
+        },
+        animation (event, button) {
+            let x = event.offsetX;
+            let y = event.offsetY;
+            let span = document.createElement('span');
+            span.className = `${Zeort.uiPrefix}-button-animation`;
+            span.style.left = x + 'px';
+            span.style.top = y + 'px';
+            button.appendChild(span);
+            
+            setTimeout(() => {
+                button.removeChild(span)
+            }, 600)
         }
     }
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-    .ze-button{
+    .#{$prefix}-button{
         padding: 10px 16px;
-        font-size: 14px;
+        font-size: $text;
         background-color: white;
         outline: none;
         border: 1px solid #999;
         line-height: 1;
-        color: #666;
+        color: $default;
         border-radius: 4px;
         cursor: pointer;
         transition: all .15s;
-        &:hover{
-            color: #19B5FE;
-            border-color: #19B5FE;
+        position: relative;
+        overflow: hidden;
+        &:not(:disabled):hover{
+            color: $default-hover;
+            border-color: $default-hover;
         }
     }
-    .ze-button-info{
-        background-color: rgba(25, 181, 254, 1);
+    .#{$prefix}-button-info{
+        background-color: $info;
         color: #fff;
-        border-color: rgba(25, 181, 254, 1);
-        &:hover{
-            background-color: rgba(25, 181, 254, .7);
+        border-color: $info;
+        &:not(:disabled):hover{
+            background-color: $info-hover;
             color: #fff;
-            border-color: rgba(25, 181, 254, .7);
+            border-color: $info-hover;
         }
     }
-    .ze-button-disabled{
-        opacity: .5;
+    .#{$prefix}-button-primary{
+        background-color: $primary;
+        color: #fff;
+        border-color: $primary;
+        &:not(:disabled):hover{
+            background-color: $primary-hover;
+            color: #fff;
+            border-color: $primary-hover;
+        }
+    }
+    .#{$prefix}-button-success{
+        background-color: $success;
+        color: #fff;
+        border-color: $success;
+        &:not(:disabled):hover{
+            background-color: $success-hover;
+            color: #fff;
+            border-color: $success-hover;
+        }
+    }
+    .#{$prefix}-button-warning{
+        background-color: $warning;
+        color: #fff;
+        border-color: $warning;
+        &:not(:disabled):hover{
+            background-color: $warning-hover;
+            color: #fff;
+            border-color: $warning-hover;
+        }
+    }
+    .#{$prefix}-button-error{
+        background-color: $error;
+        color: #fff;
+        border-color: $error;
+        &:not(:disabled):hover{
+            background-color: $error-hover;
+            color: #fff;
+            border-color: $error-hover;
+        }
+    }
+    .#{$prefix}-button-disabled{
+        opacity: $disabled;
         cursor: not-allowed;
     }
 </style>

@@ -3,7 +3,7 @@
         <ze-slider></ze-slider>
         <button @click="btn">点击</button>
         <button @click="clo">取消</button>
-        <ze-button type="info" disabled>默认按钮</ze-button>
+        <ze-button type="info" @click="fn">默认按钮</ze-button>
     </div>
 </template>
 
@@ -25,6 +25,9 @@ export default {
         },
         clo() {
             this.$message.remove()
+        },
+        fn(data) {
+            console.log(data)
         }
     },
 };
@@ -32,4 +35,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+    .aa{
+        padding: 20px 40px;
+    }
 </style>
