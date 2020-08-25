@@ -27,7 +27,7 @@ export default {
             this.$message.remove()
         },
         fn(data) {
-            console.log(data)
+            // console.log(data)
         }
     },
 };

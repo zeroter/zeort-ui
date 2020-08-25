@@ -1,7 +1,7 @@
 <template>
     <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" appear>
-        <div class="ze-message-container" v-if="isShowMsg">
-            <div class="ze-def-flex ze-message-content ze-noselect">{{content}}</div>
+        <div :class="`${prefix}-message-container`" v-if="isShowMsg">
+            <div :class="`${prefix}-def-flex ${prefix}-message-content ${prefix}-noselect`">{{content}}</div>
         </div>
     </transition>
 </template>
@@ -12,7 +12,8 @@ export default {
     name: "Message",
     data() {
         return {
-            isShowMsg: true
+            isShowMsg: true,
+            prefix: Zeort.uiPrefix
         };
     },
     props: {
@@ -75,12 +76,12 @@ export default {
 };
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-    .ze-message-container {
+    .#{$prefix}-message-container {
         position: fixed;
         left: 50%;
         top: 0;
         transform: translateX(-50%);
-        .ze-message-content {
+        .#{$prefix}-message-content {
             border-radius: 4px;
             box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
             background: #fff;

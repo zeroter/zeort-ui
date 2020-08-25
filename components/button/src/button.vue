@@ -45,18 +45,24 @@ export default {
             const button = this.$refs[this.btn_ref];
 
             if(this.isAnimation && event && button) {
-                // this.animation(event, button)
+                this.animation(event, button)
             }
 
             this.$emit('click', event)
         },
         animation (event, button) {
-            let x = event.offsetX;
-            let y = event.offsetY;
+            if(!event) return
+
+            let x = event.clientX;
+            let y = event.clientY;
+            
+            let btnX = button.getBoundingClientRect().left;
+            let btnY = button.getBoundingClientRect().top;
+
             let span = document.createElement('span');
             span.className = `${Zeort.uiPrefix}-button-animation`;
-            span.style.left = x + 'px';
-            span.style.top = y + 'px';
+            span.style.left = x - btnX + 'px';
+            span.style.top = y - btnY + 'px';
             button.appendChild(span);
             
             setTimeout(() => {

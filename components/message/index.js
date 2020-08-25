@@ -48,7 +48,7 @@ function reomveNodes (){
         closeTimer = null;
     };
 
-    const zeMsgCont = document.querySelector('.ze-message-container');
+    const zeMsgCont = document.querySelector(`.${Zeort.uiPrefix}-message-container`);
 
     if(zeMsgCont){
         document.body.removeChild(zeMsgCont)
