@@ -43,7 +43,22 @@ function oneOf (value, validList) {
     return false;
 }
 
+function on (el, event, fn, useCapture = false) {
+    if(!el || !event || checkedValueType(fn) !== 'function') return
+
+    el.addEventListener(event, fn, useCapture)
+}
+
+function off (el, event, fn, useCapture = false) {
+    if(!el || !event || checkedValueType(fn) !== 'function') return
+
+    el.removeEventListener(event, fn, useCapture)
+}
+
 export {
     checkedValueType,
-    setElStyle
+    setElStyle,
+    oneOf,
+    on,
+    off
 }

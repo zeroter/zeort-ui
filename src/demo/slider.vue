@@ -1,6 +1,6 @@
 <template>
     <div id="msg">
-        <ze-slider></ze-slider>
+        <ze-slider v-model="val"></ze-slider>
         <button @click="btn">点击</button>
         <button @click="clo">取消</button>
         <ze-button type="info" @click="fn">默认按钮</ze-button>
@@ -16,6 +16,7 @@ export default {
     data() {
         return {
             num: 0,
+            val: 0
         };
     },
     mounted() {},

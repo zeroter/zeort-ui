@@ -1,20 +1,31 @@
 <template>
-    <div :class="`${prefix}-slider`" :style="sliderStyles">
+    <div :class="`${prefix}-slider`" :style="sliderStyles" ref="sliderBox">
         <div :class="`${prefix}-slider-background`" :style="backgroundStyles"></div>
         <div :class="`${prefix}-slider-foreground`" :style="foregroundStyles" ref="foreground"></div>
-        <div :class="`${prefix}-slider-handle`" :style="handleStyles" ref="handle"></div>
+        <div 
+            ref="handle" 
+            :class="`${prefix}-slider-handle`" 
+            :style="handleStyles" 
+            @mousedown="onMouseDown($event)"
+        ></div>
         <!-- icon -->
-        <div v-if="isShowLable" :class="`${prefix}-slider-label`">{{value}}</div>
+        <div v-if="isShowLabel" :class="`${prefix}-slider-label`">{{value}}</div>
     </div>
 </template>
 <script>
-import { setElStyle } from "../../utils/common";
+import { setElStyle, on, off } from "../../utils/common";
 export default {
     name: "Slider",
     data () {
         return{
-            prefix: Zeort.uiPrefix
+            prefix: Zeort.uiPrefix,
+            dragging: false,
+            pointStart: {}
         }
+    },
+    model: {
+        prop: 'value',
+        event: 'changeValue'
     },
     props: {
         styles: {
@@ -36,15 +47,15 @@ export default {
         },
         isShowLabel: {
             type: Boolean,
-            default: false
+            default: true
         },
         type: {
             type: String,
             default: 'left'
         },
-        isShowLable: {
-            type: Boolean,
-            default: false
+        step: {
+            type: Number,
+            default: 1
         }
     },
     computed: {
@@ -74,6 +85,10 @@ export default {
                 width: this.styles.radius * 2 + 'px',
                 height: this.styles.radius * 2 + 'px'
             }
+        },
+        getBit () {
+            let decimal = this.step.toString().split('.')[1]
+            return decimal ? decimal.length : 0 
         }
     },
     mounted () {
@@ -84,8 +99,7 @@ export default {
     methods: {
         init () {
             const that = this;
-            const foreground = this.$refs.foreground;
-            const handle = this.$refs.handle;
+            const {foreground, handle} = this.$refs;
 
             if (foreground && handle) {
                 setElStyle(foreground, {
@@ -95,6 +109,59 @@ export default {
                     left: that.styles.width * (that.value / 100) - that.styles.radius + 'px'
                 })
             }
+        },
+        onMouseDown (event) {
+            event.preventDefault();
+            this.dragging = true;
+
+            let {offsetX, clientX} = event;
+            this.pointStart = {
+                offsetX,
+                clientX 
+            }
+
+            on(document, 'mouseup', this.onMouseUp);
+            on(document, 'mousemove', this.onMouseMove);
+        },
+        onMouseMove (event) {
+            if(!this.dragging) return
+
+            const that = this;
+            const {foreground, handle, sliderBox} = this.$refs;
+
+            if(!foreground || !handle || !sliderBox) return
+
+            let {clientX} = event;
+            let sliBoxLeft = sliderBox.getBoundingClientRect().left;
+            let x = clientX - sliBoxLeft - this.pointStart.offsetX;
+
+            x = that.setBoundary(x, -that.styles.radius, that.styles.width - that.styles.radius, that.step, that.styles.radius)
+
+            setElStyle(handle, {
+                left: x + 'px'
+            })
+            setElStyle(foreground, {
+                width: x + that.styles.radius + 'px'
+            })
+            let value = ((x + that.styles.radius) / that.styles.width * 100).toFixed(that.getBit);
+            this.$emit('changeValue', Number(value));
+        },
+        onMouseUp (event) {
+            this.dragging = false;
+            
+            off(document, 'mouseup', this.onMouseUp);
+            off(document, 'mousemove', this.onMouseMove);
+        },
+        setBoundary (value, minVal, maxVal, step, diff) {
+            if(value < minVal){
+                value = minVal
+            }
+            if(value > maxVal){
+                value = maxVal
+            }
+            value = parseInt((value + diff) / step ) * step - diff;
+
+            return value
         }
     },
     watch: {
