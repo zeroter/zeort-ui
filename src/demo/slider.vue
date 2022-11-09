@@ -24,6 +24,7 @@ export default {
             this.$message.info('这是一条提示语句');
         },
         clo() {
+            console.log(4444)
             this.$message.remove()
         }
     },
